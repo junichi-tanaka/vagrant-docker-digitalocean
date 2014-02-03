@@ -5,6 +5,7 @@
 #
 #  $ cat ~/.vagrantuser
 #  digitalocean:
+#    hostname: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 #    client_id: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 #    api_key: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 #    ssh_key_name: 'xxxxx'
@@ -13,7 +14,7 @@
 #
 
 Vagrant.configure('2') do |config|
-  config.vm.hostname              = 'docker.jeeta.net'  # 好きなhostnameに変更
+  config.vm.hostname              = config.user.digitalocean.hostname     # 好きなhostnameに変更
 
   config.vm.provider :digital_ocean do |provider, override|
     provider.client_id            = config.user.digitalocean.client_id    # https://cloud.digitalocean.com/api_access
