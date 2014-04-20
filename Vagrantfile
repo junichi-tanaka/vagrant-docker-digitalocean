@@ -25,24 +25,19 @@ Vagrant.configure('2') do |config|
     override.vm.box               = 'digital_ocean'
     override.vm.box_url           = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
 
-    provider.image                = 'Ubuntu 13.04 x64'
+    provider.image                = 'Ubuntu 14.04 x64'
     provider.region               = 'San Francisco 1'
     provider.size                 = '1GB'
   end
 
   config.vm.provision :shell, :inline => <<-EOT
-     apt-get update
-#     export LANGUAGE=en_US.UTF-8
-#     export LANG=en_US.UTF-8
-#     export LC_ALL=en_US.UTF-8
-#     locale-gen en_US.UTF-8
-#     dpkg-reconfigure -f noninteractive locales
      export DEBIAN_FRONTEND=noninteractive
-     apt-get -y --force-yes -o 'Dpkg::Options::=--force-confnew' install linux-image-extra-`uname -r`
+     apt-get update -qq
+     apt-get -y install linux-image-extra-`uname -r`
      apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-     echo "deb http://get.docker.io/ubuntu docker main" | tee -a /etc/apt/sources.list.d/docker.list
-     apt-get update
-     apt-get -y --force-yes -o 'Dpkg::Options::=--force-confnew' install lxc-docker
+     echo "deb http://get.docker.io/ubuntu docker main" | tee /etc/apt/sources.list.d/docker.list
+     apt-get update -qq
+     apt-get -y install lxc-docker
   EOT
 
 end
